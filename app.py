@@ -31,7 +31,7 @@ def generate_image():
         prompt = request.form['prompt']
         
         # हम 'gemini-1.5-flash-latest' का इस्तेमाल कर रहे हैं, जो तेज़ है
-        model = genai.GenerativeModel('gemini-1.5-flash-latest')
+        model = genai.GenerativeModel('gemini-2.5-flash-image')
         
         # AI को प्रॉम्प्ट भेजो (यहाँ से mime_type हटा दिया गया है)
         response = model.generate_content(prompt)
@@ -62,7 +62,7 @@ def edit_image():
         img = Image.open(image_file.stream)
         
         # एडिटिंग के लिए 'pro' मॉडल बेहतर है
-        model = genai.GenerativeModel('gemini-1.5-pro-latest')
+        model = genai.GenerativeModel('gemini-2.5-flash-image')
         
         # AI को टेक्स्ट (प्रॉम्प्ट) और इमेज दोनों एक साथ भेजो
         response = model.generate_content([edit_prompt, img])
