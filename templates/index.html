@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gemini Image Magic ✨</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; background: #f0f2f5; }
+        h1, h2 { text-align: center; color: #333; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        form { display: flex; flex-direction: column; gap: 10px; }
+        input, button { padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        button { background-color: #4285F4; color: white; cursor: pointer; border: none; }
+        img { max-width: 100%; margin-top: 20px; border-radius: 8px; }
+        .error { color: red; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <h1>Gemini Image Magic ✨</h1>
+
+    <!-- इमेज बनाने का फॉर्म -->
+    <div class="container">
+        <h2>Generate a New Image</h2>
+        <form action="/generate" method="post">
+            <input type="text" name="prompt" placeholder="e.g., A cute cat wearing a space suit" required>
+            <button type="submit">Generate Image</button>
+        </form>
+        {% if generated_image %}
+            <h3>Result for: "{{ prompt }}"</h3>
+            <img src="data:image/png;base64,{{ generated_image }}" alt="Generated Image">
+        {% endif %}
+    </div>
+
+    <!-- इमेज एडिट करने का फॉर्म -->
+    <div class="container">
+        <h2>Edit an Existing Image</h2>
+        <form action="/edit" method="post" enctype="multipart/form-data">
+            <label for="image_file">1. Upload your image:</label>
+            <input type="file" name="image_file" required>
+            <label for="edit_prompt">2. Describe your edit:</label>
+            <input type="text" name="edit_prompt" placeholder="e.g., Make the background a snowy mountain" required>
+            <button type="submit">Edit Image</button>
+        </form>
+        {% if edited_image %}
+            <h3>Result for: "{{ edit_prompt }}"</h3>
+            <img src="data:image/png;base64,{{ edited_image }}" alt="Edited Image">
+        {% endif %}
+    </div>
+    
+    {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+
+</body>
+</html>
